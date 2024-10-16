@@ -5,9 +5,9 @@ window.addEventListener("load", function () {
 
   const user = JSON.parse(this.localStorage.getItem("result"));
 
-  mostrarAlerta(`Bienvenido ${user.nombreUsuario}`);
+  mostrarAlerta(`Bienvenido ${user?.nombreUsuario}`);
 
-  btnCerrarSesion.addEventListener("click", cerrarSesion(user));
+  btnCerrarSesion.addEventListener("click", () => cerrarSesion(user));
 });
 
 function mostrarAlerta(mensaje) {
@@ -39,7 +39,12 @@ async function cerrarSesion(user) {
 
     if (result.resultado) {
       localStorage.clear();
-      window.location.replace("login.html");
+
+      mostrarAlerta("Has cerrado sesión exitosamente. Redirigiendo...");
+
+      setTimeout(() => {
+        window.location.replace("login.html");
+      }, 4000);
     } else {
       console.log("Error: " + result.mensajeError);
     }
